@@ -1,0 +1,26 @@
+name: Create Resource Pack Zip
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-zip:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create a zip file
+      run: |
+        mkdir resource-pack
+        cp -r * resource-pack/
+        zip -r resource-pack.zip resource-pack/
+    
+    - name: Upload the zip file as an artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: resource-pack
+        path: resource-pack.zip
